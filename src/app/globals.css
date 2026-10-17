@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Brand colors live here — change them once and the whole
+ * site follows. Contrast notes: `gold` is decorative on ivory (rules, marks);
+ * use `gold-deep` for gold-colored text on light backgrounds and `gold-soft`
+ * for text on evergreen.
+ */
+@theme {
+  --color-evergreen-950: #0e1c16;
+  --color-evergreen-900: #142a20;
+  --color-evergreen-800: #1b3a2c;
+  --color-evergreen-700: #24493a;
+  --color-evergreen-600: #2f5a48;
+  --color-evergreen-100: #e3ebe5;
+
+  --color-ivory: #faf6ee;
+  --color-ivory-deep: #f2ebdc;
+  --color-paper: #fffdf8;
+
+  --color-gold: #b8975a;
+  --color-gold-deep: #85672f;
+  --color-gold-soft: #dcc79b;
+
+  --color-charcoal: #24231f;
+  --color-ink-muted: #5a574f;
+  --color-line: #e2d9c6;
+  --color-line-dark: #34503f;
+
+  --color-danger: #9b2c22;
+  --color-success: #23613f;
+
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --shadow-card: 0 1px 0 rgb(36 35 31 / 0.04), 0 12px 32px -18px rgb(20 42 32 / 0.35);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-deep);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-gold-soft);
+  }
+  ::selection {
+    background: var(--color-gold-soft);
+    color: var(--color-evergreen-950);
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Small uppercase label above headings. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-gold-deep);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+  }
+  .on-dark .eyebrow {
+    color: var(--color-gold-soft);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-evergreen-800);
+    color: var(--color-ivory);
+    border: 1px solid var(--color-evergreen-800);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-evergreen-950);
+  }
+  .btn-gold {
+    background: var(--color-gold-soft);
+    color: var(--color-evergreen-950);
+    border: 1px solid var(--color-gold-soft);
+  }
+  .btn-gold:hover:not(:disabled) {
+    background: #e9d9b5;
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--color-evergreen-800);
+    border: 1px solid color-mix(in srgb, var(--color-evergreen-800) 45%, transparent);
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--color-evergreen-800);
+    background: color-mix(in srgb, var(--color-evergreen-800) 5%, transparent);
+  }
+  .btn-outline-light {
+    background: transparent;
+    color: var(--color-ivory);
+    border: 1px solid color-mix(in srgb, var(--color-ivory) 45%, transparent);
+  }
+  .btn-outline-light:hover:not(:disabled) {
+    border-color: var(--color-ivory);
+    background: color-mix(in srgb, var(--color-ivory) 8%, transparent);
+  }
+
+  /* Underlined text link with an arrow. */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--color-evergreen-800);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.35em;
+    transition: text-decoration-color 160ms ease;
+  }
+  .link-arrow:hover {
+    text-decoration-color: currentColor;
+  }
+  .on-dark .link-arrow {
+    color: var(--color-gold-soft);
+  }
+
+  .prose-site p + p {
+    margin-top: 1rem;
+  }
+
+  /* Form fields */
+  .field-label {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 0.4rem;
+  }
+  .field-hint {
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    margin-top: 0.35rem;
+  }
+  .field-error {
+    font-size: 0.86rem;
+    color: var(--color-danger);
+    margin-top: 0.35rem;
+    font-weight: 500;
+  }
+  .input {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #cfc4ad;
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    font-size: 1rem;
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease;
+  }
+  .input:hover {
+    border-color: #b3a68b;
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-evergreen-700);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-evergreen-700) 18%, transparent);
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+  textarea.input {
+    min-height: 7rem;
+    resize: vertical;
+  }
+  select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%2324231f' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  /* Selectable option tiles (checkbox / radio) */
+  .choice {
+    position: relative;
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 0.95rem 1rem;
+    border: 1px solid #d8cdb6;
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    cursor: pointer;
+    transition:
+      border-color 140ms ease,
+      background-color 140ms ease;
+  }
+  .choice:hover {
+    border-color: #b3a68b;
+  }
+  .choice:has(input:checked) {
+    border-color: var(--color-evergreen-700);
+    background: color-mix(in srgb, var(--color-evergreen-100) 55%, var(--color-paper));
+  }
+  .choice:has(input:focus-visible) {
+    outline: 2px solid var(--color-gold-deep);
+    outline-offset: 2px;
+  }
+  .choice input {
+    margin-top: 0.25rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--color-evergreen-800);
+    flex-shrink: 0;
+  }
+}
+
+/* Thin hand-drawn style string of bulbs used as a section divider. */
+.bulb-rule {
+  height: 18px;
+  background-image: radial-gradient(circle at 50% 70%, var(--color-gold) 0 3px, transparent 3.5px),
+    linear-gradient(var(--color-line), var(--color-line));
+  background-size:
+    44px 18px,
+    100% 1px;
+  background-position:
+    0 0,
+    0 6px;
+  background-repeat: repeat-x, no-repeat;
+}
+.on-dark .bulb-rule {
+  background-image: radial-gradient(circle at 50% 70%, var(--color-gold-soft) 0 3px, transparent 3.5px),
+    linear-gradient(var(--color-line-dark), var(--color-line-dark));
+}
