@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { db } from "@/db";
 import { adminSessions } from "@/db/schema";
+import { site } from "@/config/site";
 
 const scrypt = promisify(scryptCb) as (pw: string, salt: Buffer, len: number, opts: object) => Promise<Buffer>;
 
@@ -66,7 +67,9 @@ export async function createSession(): Promise<void> {
   const jar = await cookies();
   jar.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    // Secure everywhere except plain-http local previews (http://localhost),
+    // where some browsers (Safari) would otherwise drop the cookie.
+    secure: process.env.NODE_ENV === "production" && !site.url.startsWith("http://"),
     sameSite: "lax",
     path: "/",
     expires: expiresAt,

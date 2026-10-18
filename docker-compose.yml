@@ -1,0 +1,23 @@
+# Local PostgreSQL for running the site on your own computer.
+#   Start:  docker compose up -d
+#   Stop:   docker compose down        (your data is kept)
+#   Wipe:   docker compose down -v     (deletes all local data)
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lights
+      POSTGRES_PASSWORD: lights
+      POSTGRES_DB: lights
+    ports:
+      - "5432:5432"
+    volumes:
+      - lights-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lights"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  lights-db:
