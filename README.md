@@ -52,6 +52,10 @@ Credits for stock images are listed at `/photo-credits`.
 
 ## Local development
 
+The site runs on **port 3001** (`npm run dev` / `npm start`) so it can sit alongside another
+app on 3000. `docker compose up -d` starts a local Postgres on **port 5433**:
+`DATABASE_URL=postgres://lights:lights@localhost:5433/lights`.
+
 Requirements: Node.js 20.9+ and PostgreSQL 14+.
 
 ```bash
@@ -60,7 +64,7 @@ cp .env.example .env.local        # then fill in DATABASE_URL etc.
 createdb lights                   # or create a database in your provider
 npm run db:migrate                # applies everything in /drizzle
 npm run admin:hash -- "a long unique password"   # paste output into ADMIN_PASSWORD_HASH
-npm run dev                       # http://localhost:3000
+npm run dev                       # http://localhost:3001
 ```
 
 The owner dashboard is at **`/admin`**.

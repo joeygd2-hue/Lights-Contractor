@@ -21,7 +21,7 @@ export const site = {
     "Professional Christmas light installation for homes in New Territory and Sugar Land, Texas. We design, install, maintain and take down your holiday lighting — using our own commercial-grade lights, so there's nothing for you to buy or store.",
 
   /** PLACEHOLDER — your production domain, no trailing slash. Also set NEXT_PUBLIC_SITE_URL. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001",
 
   /**
    * PLACEHOLDER — contact details. Leave as `null` until confirmed; every

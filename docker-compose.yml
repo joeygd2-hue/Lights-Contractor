@@ -11,7 +11,8 @@ services:
       POSTGRES_PASSWORD: lights
       POSTGRES_DB: lights
     ports:
-      - "5432:5432"
+      # 5433 on your computer so it won't clash with another Postgres (e.g. PrepX) on 5432.
+      - "5433:5432"
     volumes:
       - lights-db:/var/lib/postgresql/data
     healthcheck:
